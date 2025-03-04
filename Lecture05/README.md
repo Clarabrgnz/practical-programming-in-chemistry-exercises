@@ -45,8 +45,30 @@ wheel                     0.42.0             pyhd8ed1ab_0    conda-forge
 xz                        5.2.6                h57fd34a_0    conda-forge
 ```
 
-and you should be able to see `numpy` and `pandas` there.
+and you should be able to see `numpy` and `pandas` there. A better way to this, instead of manually searching this list would be to use the `grep` command.
 
+For instance:
+
+```bash
+conda list | grep numpy
+```
+will output something like: `numpy    2.2.3  pypi_0    pypi`
+
+while
+```bash
+conda list | grep pandas
+```
+will output something like: `pandas   2.2.3  pypi_0    pypi`
+
+<details>
+<summary>Explanation</summary>
+
+* `grep` is used to search for text patterns. Here we are searching for the text pattern "numpy" or "pandas" in the output of the command `conda list`
+* The pipe symbol `|` connects two commands, sending the output of the first command as input to the second command.
+* When you run `conda list | grep numpy`, you're taking all your installed packages (from conda list) and filtering to only show lines containing "numpy".
+* This approach is much faster than scanning through a long list manually, as it instantly shows you if and which versions of numpy or pandas are installed in your environment.
+
+</details>
 
 ## Installing new packages and updating the environment file
 
@@ -60,17 +82,15 @@ In this step you will learn how to create a development branch in your repositor
 
 This can be done as follows:
 
-1. In your terminal, navigate to your personal
-`<username>/ppchem` repository on your computer.
-1. Make sure you have activated your environment: `conda activate ppchem`
+1. In your terminal, navigate to your personal `ppchem` repository on your computer. This will be in the folder you created in a previous exercise, for example at `~/git/ppchem/`.
+1. Make sure you have activated your conda environment (which is probably also called "ppchem"!): `conda activate ppchem`
 1. Install matplotlib as follows: `pip install matplotlib`
 1. Create a new branch: `git checkout -b update-env`
 1. Export the environment file: `conda env export > env.yml`
 1. Inspect the changes to the environment file compared to the last commit. This can be done by running `git diff env.yml`. Use your arrow keys to scroll. There may be a few changes, but most importantly you should see a line like: `+ - matplotlib==3.8.3`. This tells us that, relative to the last commit, matplotlib has been installed in the environment, at version number `3.8.3`. Press `q` to quit the git diff viewer.
 1. Add the changes: `git add env.yml`
 1. Commit them with a meaningful message: `git commit -m "Updated environment to include matplotlib"`
-1. Push to your fork. As the remote doesn't yet know that we have created the branch `update-env` locally, we need to push with: `git push --set-upstream origin
-   update-env`
+1. Push to your repository. As the remote doesn't yet know that we have created the branch `update-env` locally, we need to push with: `git push --set-upstream origin update-env`
    
 Navigate to your repository on Github, at URL:
 `https://github.com/<username>/ppchem`. You should
